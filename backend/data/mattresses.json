@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Colchón Ortopédico",
+    "dimensions": "200x150x20",
+    "material": "Espuma",
+    "price": "20000123"
+  },
+  {
+    "id": 2,
+    "name": "Colchón de Resortes Pepe",
+    "dimensions": "190x140x25",
+    "material": "Resortes y espuma",
+    "price": 35000
+  }
+]
