@@ -3,8 +3,26 @@ import Mattress from "../models/mattressModel.js"; // Asegúrate de ajustar la r
 // Leer todos los colchones
 const getAllMattresses = async (req, res) => {
   try {
-    const mattresses = await Mattress.find();
-    res.json(mattresses);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const [mattresses, total] = await Promise.all([
+      Mattress.find()
+        .skip(skip)
+        .limit(limit),
+      Mattress.countDocuments()
+    ]);
+
+    res.json({
+      mattresses,
+      pagination: {
+        total,
+        pages: Math.ceil(total / limit),
+        currentPage: page,
+        limit
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error al recuperar los colchones" });
@@ -75,4 +93,28 @@ const deleteMattress = async (req, res) => {
   }
 };
 
-export { getAllMattresses, addMattress, getMattressById, updateMattress, deleteMattress };
+// Agregar este nuevo método
+const deleteManyMattresses = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: "Se requiere un array de IDs válido" });
+    }
+
+    const result = await Mattress.deleteMany({ _id: { $in: ids } });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "No se encontraron colchones para eliminar" });
+    }
+
+    res.status(200).json({ 
+      message: `${result.deletedCount} colchones eliminados exitosamente` 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al eliminar los colchones" });
+  }
+};
+
+export { getAllMattresses, addMattress, getMattressById, updateMattress, deleteMattress, deleteManyMattresses };

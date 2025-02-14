@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import "bulma/css/bulma.min.css";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, onSearch }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -15,13 +15,21 @@ const Layout = ({ children }) => {
     <>
       <header className="has-background-primary p-3">
         <nav className="container">
-          <ul className="is-flex is-justify-content-space-between">
-            <li>
+          <div className="is-flex is-justify-content-space-between is-align-items-center">
+            <div className="is-flex is-align-items-center">
               <Link className="button is-light mr-3" to={"/"}>
                 Products
               </Link>
-            </li>
-            <li>
+              {onSearch && (
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Buscar productos..."
+                  onChange={(e) => onSearch(e.target.value)}
+                />
+              )}
+            </div>
+            <div>
               {user ? (
                 <>
                   <Link className="button is-light mr-3" to={"/dashboard"}>
@@ -36,8 +44,8 @@ const Layout = ({ children }) => {
                   Login
                 </Link>
               )}
-            </li>
-          </ul>
+            </div>
+          </div>
         </nav>
       </header>
       <main style={{ minHeight: "100vh" }} className="container mt-5">

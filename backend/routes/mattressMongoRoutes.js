@@ -4,7 +4,8 @@ import {
   addMattress,
   getMattressById,
   updateMattress,
-  deleteMattress
+  deleteMattress,
+  deleteManyMattresses
 } from "../controllers/mattresMongoController.js";
 
 const mattressMongoRoutes = Router();
@@ -23,5 +24,8 @@ mattressMongoRoutes.put("/:id", updateMattress);
 
 // Eliminar un colchón
 mattressMongoRoutes.delete("/:id", deleteMattress);
+
+// Agregar esta nueva ruta
+mattressMongoRoutes.post("/delete-many", deleteManyMattresses);
 
 export { mattressMongoRoutes };
