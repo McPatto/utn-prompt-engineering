@@ -5,16 +5,18 @@ Web system for mattress inventory management, with functionalities to manage pro
 
 ## Project Structure
 
-├── frontend/ # React Application
-│ ├── src/
-│ │ ├── components/ # Reusable components
-│ │ ├── pages/ # Main pages
-│ │ └── services/ # API services
-│ └── package.json
-│
-└── backend/ # Node.js/Express Server
-├── controllers/ # Application controllers
-└── routes/ # API routes
+```
+frontend/                # React Application
+├── src/
+│   ├── components/     # Reusable components
+│   ├── pages/         # Main pages
+│   └── services/      # API services
+└── package.json
+
+backend/                # Node.js/Express Server
+├── controllers/       # Application controllers
+└── routes/           # API routes
+```
 
 ## Prerequisites
 - Node.js (v20.11.1 or higher)
